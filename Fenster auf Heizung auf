@@ -32,6 +32,7 @@ trigger:
   - platform: state
     entity_id: !input window_entity
     to: 'on'
+    for: !input 'minimum_open_time'
 condition:
   - condition: not
     conditions:
