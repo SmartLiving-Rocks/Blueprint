@@ -1,0 +1,51 @@
+blueprint:
+  name: Fenster auf, Heizung aus mit Verzögerung
+  description: Schaltet eingeschaltete Heizung oder das Klimagerät nach einer bestimmten Zeit aus, sobald das Fenster geöffnet wurde. Wenn das Fenster weider geschlossen wird, schaltet sich die Heizung automatisch wieder ein.
+  domain: automation
+  input:
+    window_entity:
+      name: Fenstersensor
+      description: Sensor der das Thermostat steurt.
+      selector:
+        entity:
+          domain: binary_sensor
+    minimum_open_time:
+      name: Zeitlicher Versatz
+      description: Zeit bevor die Automation ausgelöst wird
+      default: 12
+      selector:
+        number:
+          min: 0.0
+          max: 120.0
+          unit_of_measurement: seconds
+          mode: slider
+          step: 1.0
+    climate_target:
+      name: Thermostat
+      description: Heizung oder Klimaanlage, die auf den Fenstersensor reagieren soll.
+      selector:
+        entity:
+          domain: climate
+
+trigger:
+  - platform: state
+    entity_id: !input window_entity
+    to: 'on'
+    for: !input 'minimum_open_time'
+condition:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: !input 'climate_target'
+      attribute: hvac_action
+      state: 'off'
+action:
+  - service: climate.turn_off
+    entity_id: !input climate_target
+  - wait_for_trigger:
+    - platform: state
+      entity_id: !input window_entity
+      to: 'off'
+    continue_on_timeout: false
+  - service: climate.turn_on
+    entity_id: !input climate_target
