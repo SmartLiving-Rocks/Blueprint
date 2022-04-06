@@ -1,6 +1,6 @@
 blueprint:
   name: Window open, climate off after a defined time
-  description: An automation that turns off a running your climate device for exmple
+  description: An automation that turns off a running your climate device for example
     a heater or an air conditioning if a window sensor is open for a specific time.
     It waits until the window is closed again in order to turn the climate entity
     on again.
@@ -13,7 +13,7 @@ blueprint:
         entity:
           domain: binary_sensor
     minimum_open_time:
-      name: Miniumum time the window is open
+      name: Minimum time the window is open
       description: Time in seconds to wait until the automation is triggered
       default: 12
       selector:
