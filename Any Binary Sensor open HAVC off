@@ -24,7 +24,7 @@ blueprint:
         number:
           min: 0.0
           max: 120.0
-          unit_of_measurement: seconds
+          unit_of_measurement: minutes
           mode: slider
           step: 1.0
     climate_target:
