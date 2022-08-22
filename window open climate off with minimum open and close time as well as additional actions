@@ -59,11 +59,11 @@ blueprint:
       default: []
       selector:
         action: {}
-  source_url: https://github.com/SmartLiving-Rocks/Blueprint/blob/49ec09154582ca12a9191fc2dfa316417694e2b4/window%20open%20climate%20off%20with%20optional%20actions
+  source_url: https://github.com/SmartLiving-Rocks/Blueprint/blob/787defcba761170faa79145cc12eec8b9198beaa/window%20open%20climate%20off%20with%20minimum%20open%20and%20close%20time%20as%20well%20as%20additional%20actions
 variables:
   open_action: !input open_action
   close_action: !input close_action
-  source_url: https://community.home-assistant.io/t/window-open-climate-off/257293
+  
 mode: single
 trigger:
 - platform: state
@@ -94,10 +94,10 @@ action:
         entity_id: !input window_entity
         to: 'off'
       continue_on_timeout: false
+    - delay: !input minimum_close_time
     - choose:
       - conditions: '{{ close_action is defined and close_action|length > 0 }}'
         sequence: !input close_action
-    - delay: !input minimum_close_time
     - service: climate.set_hvac_mode
       target:
         entity_id: !input climate_target
@@ -119,10 +119,10 @@ action:
         entity_id: !input window_entity
         to: 'off'
       continue_on_timeout: false
+    - delay: !input minimum_close_time
     - choose:
       - conditions: '{{ close_action is defined and close_action|length > 0 }}'
         sequence: !input close_action
-    - delay: !input minimum_close_time
     - service: climate.set_hvac_mode
       target:
         entity_id: !input climate_target
@@ -144,10 +144,10 @@ action:
         entity_id: !input window_entity
         to: 'off'
       continue_on_timeout: false
+    - delay: !input minimum_close_time
     - choose:
       - conditions: '{{ close_action is defined and close_action|length > 0 }}'
         sequence: !input close_action
-    - delay: !input minimum_close_time
     - service: climate.set_hvac_mode
       data:
         hvac_mode: heat
@@ -169,10 +169,10 @@ action:
         entity_id: !input window_entity
         to: 'off'
       continue_on_timeout: false
+    - delay: !input minimum_close_time
     - choose:
       - conditions: '{{ close_action is defined and close_action|length > 0 }}'
         sequence: !input close_action
-    - delay: !input minimum_close_time
     - service: climate.set_hvac_mode
       data:
         hvac_mode: automatic
@@ -194,10 +194,10 @@ action:
         entity_id: !input window_entity
         to: 'off'
       continue_on_timeout: false
+    - delay: !input minimum_close_time
     - choose:
       - conditions: '{{ close_action is defined and close_action|length > 0 }}'
         sequence: !input close_action
-    - delay: !input minimum_close_time
     - service: climate.set_hvac_mode
       data:
         hvac_mode: auto
@@ -219,10 +219,10 @@ action:
         entity_id: !input window_entity
         to: 'off'
       continue_on_timeout: false
+    - delay: !input minimum_close_time
     - choose:
       - conditions: '{{ close_action is defined and close_action|length > 0 }}'
         sequence: !input close_action
-    - delay: !input minimum_close_time
     - service: climate.set_hvac_mode
       data:
         hvac_mode: dry
@@ -244,10 +244,10 @@ action:
         entity_id: !input window_entity
         to: 'off'
       continue_on_timeout: false
+    - delay: !input minimum_close_time
     - choose:
       - conditions: '{{ close_action is defined and close_action|length > 0 }}'
         sequence: !input close_action
-    - delay: !input minimum_close_time
     - service: climate.set_hvac_mode
       data:
         hvac_mode: fan_only
