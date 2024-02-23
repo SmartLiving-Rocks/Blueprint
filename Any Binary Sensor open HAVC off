@@ -1,7 +1,7 @@
 blueprint:
-  name: Window open, climate off after a defined time
+  name: Door open, climate off after a defined time
   description: 'Climate device like heating and cooling devices (if active) are turned
-    off and go back to the previous set stage after the windows is closed again. You can also define a time before the 
+    off and go back to the previous set stage after the binary sensor is in its off state again. You can also define a time before the 
     climate device turns back to its previous state. Now it supports several heating modes and different vendors like Tado. The supported
     HAVC modes are: automatic, auto, heat, heat_cool and off. If you need more please
     let me know. Happy automating!'
