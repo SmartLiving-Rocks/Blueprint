@@ -8,7 +8,7 @@ blueprint:
   domain: automation
   input:
     window_entity:
-      name: Any Binary Sensor
+      name: Binary Sensor
       description: The binary sensor that controls the climate entity. If you have
         more sensors please make a group sensor using Home Assistant Helpers. 
       selector:
