@@ -4,13 +4,13 @@ blueprint:
     off and go back to the previous set stage after the windows is closed again. You can also define a time before the 
     climate device turns back to its previous state. Now it supports several heating modes and different vendors like Tado. The supported
     HAVC modes are: automatic, auto, heat, heat_cool and off. If you need more please
-    let me know. Happy automating! 2023.5'
+    let me know. Happy automating!'
   domain: automation
   input:
     window_entity:
-      name: Window Sensor
-      description: The window sensor that controls the climate entity. If you have
-        more window sensors please make a group sensor.
+      name: Any Binary Sensor
+      description: The binary sensor that controls the climate entity. If you have
+        more sensors please make a group sensor using Home Assistant Helpers. 
       selector:
         entity:
           domain: binary_sensor
