@@ -102,9 +102,110 @@ action:
             preannounce: !input preannounce
             answers:
               - id: 'yes'
-                sentences: ['Ja']
+                sentences: 
+                - 'Ja'
+                - Sicher
+                - Absolut
+                - Mach weiter
+                - Bitte tu es
+                - Natürlich
+                - Das ist in Ordnung
+                - Mach es
+                - Jep
+                - Ja
+                - Ok
+                - Okay
+                - Bestätigt
+                - Ich stimme zu
+                - Klingt gut
+                - Du hast es
+                - Definitiv
+                - Auf jeden Fall
+                - Warum nicht
+                - In der Tat
+                - Bestätigt
+                - Lass es uns machen
+                - Sicherlich
+                - Richtig
+                - Gut
+                - Alles gut
+                - Mach es so
+                - Ich genehmige
+                - Das stimmt
+                - Ich bin damit einverstanden
+                - Kein Problem
+                - Leg los
+                - Klingt gut
+                - Ich bin dabei
+                - Fortfahren
+                - Es ist ein Ja
+                - Ich bin dabei
+                - Okay ja
+                - Das ist ein Ja
+                - Ja mach weiter
+                - Ich bin damit einverstanden
+                - Positiv
+                - Mach das
+                - Es ist okay
+                - Funktioniert für mich
+                - Ich bin damit einverstanden
+                - Jep mach es
+                - Bitte mach weiter
+                - Das will ich
+                
               - id: 'no'
-                sentences: ['Nein']
+                sentences: 
+                - 'Nein'
+                - Später vielleicht
+                - Nö
+                - Tu es nicht
+                - Bitte nicht
+                - Nein danke
+                - Ich glaube nicht
+                - Nicht jetzt
+                - Das ist ein Nein
+                - Ich würde lieber nicht
+                - Auf keinen Fall
+                - Nicht wirklich
+                - Abbrechen
+                - Negativ
+                - Stopp
+                - Tu es nicht
+                - Ich habe Nein gesagt
+                - Nicht nötig
+                - Egal
+                - Nicht notwendig
+                - Nein das stimmt nicht
+                - Ich stimme nicht zu
+                - Überspringe es
+                - Nicht fortfahren
+                - Das will ich nicht
+                - Mach nicht weiter
+                - Lass es
+                - Das ist falsch
+                - Ich ziehe es vor nicht
+                - Nein danke
+                - Ich bin nicht einverstanden
+                - Ich sage Nein
+                - Lass es uns nicht tun
+                - Nicht dieses Mal
+                - Ich bin nicht dabei
+                - Bitte tu das nicht
+                - Keine Aktion durchführen
+                - Ich würde Nein sagen
+                - Keine Aktion nötig
+                - Ich bin dagegen
+                - Ich würde es überspringen
+                - Lieber nicht
+                - Nicht heute
+                - Ich bin mir nicht sicher besser nicht
+                - Das will ich nicht
+                - Das wird nicht nötig sein
+                - Ich stimme nicht zu
+                - Nein das ist falsch
+                - Lass es uns überspringen
+                - Ich fühle mich dabei nicht wohl
+                
           response_variable: response
 
         - choose:
