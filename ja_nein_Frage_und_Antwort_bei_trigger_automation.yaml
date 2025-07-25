@@ -1,0 +1,143 @@
+blueprint:
+  name: Stelle Ja/Nein Frage bei Auslöser
+  description: |
+    Diese Automation stellt eine Ja/Nein-Frage über einen Voice Assistant, 
+    wenn ein Auslöser (z. B. Taster oder Geräteänderung) eintritt. 
+    Die Antwort wird ausgewertet und entsprechende Aktionen ausgeführt.
+  domain: automation
+  author: Amon Reich
+  homeassistant:
+    min_version: 2025.6.99
+  input:
+    trigger_entity:
+      name: Auslöser (Taste oder Gerät)
+      description: Entität, die den Prozess startet (z. B. Taster, Schalter, Sensor)
+      selector:
+        entity: {}
+    trigger_from:
+      name: Von-Zustand (optional)
+      description: Der vorherige Zustand, der einen Wechsel auslöst (leer lassen für beliebig)
+      default: null
+      selector:
+        text: {}
+    trigger_to:
+      name: Nach-Zustand
+      description: Der Zustand, der den Auslöser auslöst (z. B. 'on' oder 'pressed')
+      selector:
+        text: {}
+    voice_assistant:
+      name: Voice Assistant
+      description: Der Sprachassistent, der die Frage stellt.
+      selector:
+        entity:
+          filter:
+            - domain: assist_satellite
+    preannounce:
+      name: Vorankündigung
+      description: Spiele einen Ton vor der Frage ab.
+      default: true
+      selector:
+        boolean: {}
+    question:
+      name: Frage
+      description: Die gestellte Ja/Nein-Frage.
+      selector:
+        text: {}
+    yes_actions:
+      name: Aktionen bei „Ja“
+      selector:
+        action: {}
+      default: []
+    yes_answer:
+      name: Antwort bei „Ja“
+      default: Erledigt
+      selector:
+        text: {}
+    no_actions:
+      name: Aktionen bei „Nein“
+      selector:
+        action: {}
+      default: []
+    no_answer:
+      name: Antwort bei „Nein“
+      default: Nichts wird unternommen
+      selector:
+        text: {}
+    other_actions:
+      name: Aktionen bei Unklar
+      selector:
+        action: {}
+      default: []
+    other_answer:
+      name: Antwort bei Unklar
+      default: Wie bitte? Das habe ich nicht verstanden. Bitte noch einmal wiederholen.
+      selector:
+        text: {}
+    number_of_retries:
+      name: Wiederholungen bei Unklarheit
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 10
+          step: 1
+          mode: slider
+
+trigger:
+  - platform: state
+    entity_id: !input trigger_entity
+    from: !input trigger_from
+    to: !input trigger_to
+
+variables:
+  number_of_retries: !input number_of_retries
+
+action:
+  - repeat:
+      sequence:
+        - service: assist_satellite.ask_question
+          data:
+            entity_id: !input voice_assistant
+            question: !input question
+            preannounce: !input preannounce
+            answers:
+              - id: 'yes'
+                sentences: ['Ja']
+              - id: 'no'
+                sentences: ['Nein']
+          response_variable: response
+        - choose:
+            - conditions:
+                - condition: template
+                  value_template: "{{ response.id == 'yes' }}"
+              sequence:
+                - choose: []
+                  default: !input yes_actions
+                - service: assist_satellite.announce
+                  data:
+                    entity_id: !input voice_assistant
+                    message: !input yes_answer
+                    preannounce: false
+            - conditions:
+                - condition: template
+                  value_template: "{{ response.id == 'no' }}"
+              sequence:
+                - choose: []
+                  default: !input no_actions
+                - service: assist_satellite.announce
+                  data:
+                    entity_id: !input voice_assistant
+                    message: !input no_answer
+                    preannounce: false
+          default:
+            - choose: []
+              default: !input other_actions
+            - service: assist_satellite.announce
+              data:
+                entity_id: !input voice_assistant
+                message: !input other_answer
+                preannounce: false
+      until:
+        - condition: template
+          value_template: >
+            {{ (response is defined and response.id in ['yes','no']) or repeat.index > number_of_retries }}
