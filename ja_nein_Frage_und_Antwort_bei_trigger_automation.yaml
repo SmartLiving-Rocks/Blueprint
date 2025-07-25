@@ -105,46 +105,8 @@ action:
                 sentences: ['Ja']
               - id: 'no'
                 sentences: ['Nein']
-      response_variable: response
-    - choose:
-      - conditions:
-        - condition: template
-          value_template: '{{response.id == ''yes''}}'
-        sequence:
-        - sequence: !input yes_actions
-        - action: assist_satellite.announce
-          metadata: {}
-          data:
-            message: !input yes_answer
-            preannounce: false
-          target:
-            entity_id: '{{voice_assistant}}'
-      - conditions:
-        - condition: template
-          value_template: '{{response.id == ''no''}}'
-        sequence:
-        - sequence: !input no_actions
-        - action: assist_satellite.announce
-          metadata: {}
-          data:
-            message: !input no_answer
-            preannounce: false
-          target:
-            entity_id: '{{voice_assistant}}'
-      default:
-      - sequence: !input other_actions
-      - action: assist_satellite.announce
-        metadata: {}
-        data:
-          message: !input other_answer
-          preannounce: false
-        target:
-          entity_id: '{{voice_assistant}}'
-    until:
-    - condition: template
-      value_template: '{{ (response is defined and response.id in [''yes'',''no''])
-        or repeat.index > number_of_retries}}'
           response_variable: response
+
         - choose:
             - conditions:
                 - condition: template
@@ -157,6 +119,7 @@ action:
                     entity_id: !input voice_assistant
                     message: !input yes_answer
                     preannounce: false
+
             - conditions:
                 - condition: template
                   value_template: "{{ response.id == 'no' }}"
@@ -168,6 +131,7 @@ action:
                     entity_id: !input voice_assistant
                     message: !input no_answer
                     preannounce: false
+
           default:
             - choose: []
               default: !input other_actions
@@ -176,6 +140,7 @@ action:
                 entity_id: !input voice_assistant
                 message: !input other_answer
                 preannounce: false
+
       until:
         - condition: template
           value_template: >
